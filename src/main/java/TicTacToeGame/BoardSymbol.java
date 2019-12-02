@@ -31,4 +31,14 @@ public enum BoardSymbol {
              return BoardSymbol.X;
          }
     }
+
+    public static BoardSymbol symbolFromString(String userChoseSymbol) {
+        switch (userChoseSymbol.toUpperCase()) {
+            case "X":
+                return BoardSymbol.X;
+            case "O":
+                return BoardSymbol.O;
+        }
+        throw new IllegalArgumentException();
+    }
 }

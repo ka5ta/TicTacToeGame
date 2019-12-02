@@ -9,4 +9,8 @@ public abstract class BasePlayer {
     public BasePlayer(BoardSymbol symbolChoice) {
         this.symbolChoice = symbolChoice;
     }
+
+    public BoardSymbol getSymbolChoice() {
+        return symbolChoice;
+    }
 }

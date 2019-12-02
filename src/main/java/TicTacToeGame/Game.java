@@ -1,5 +1,6 @@
 package TicTacToeGame;
 
+import TicTacToeGame.Players.BasePlayer;
 import TicTacToeGame.Players.Computer;
 import TicTacToeGame.Players.Human;
 import TicTacToeGame.Players.Player;
@@ -11,12 +12,14 @@ public class Game {
     Player playerOne;
     Player playerTwo;
 
+    boolean isNextMovePlayerOne=true;
+
 
     private BoardSymbol[][] board;
 
     public Game() {
         this.board = new BoardSymbol[3][3];
-        for (BoardSymbol[] row: board) {
+        for (BoardSymbol[] row : board) {
             Arrays.fill(row, BoardSymbol.EMPTY);
         }
     }
@@ -37,11 +40,36 @@ public class Game {
         }
     }
 
-    public BoardSymbol playerMove(int number){
-        int column = (number-1) % 3;
-        int row = (number-1) / 3;
+    public void performPlayerMove(int number, Player player) {
+        int column = (number - 1) % 3;
+        int row = (number - 1) / 3;
+        BoardSymbol existingSymbol = board[row][column];
 
-        return board[row][column];
+
+        if (existingSymbol == BoardSymbol.EMPTY) {
+            this.board[row][column] = player.getSymbolChoice();
+
+        } else {
+
+        }
+    }
+
+    public void oneRound(){
+        // which player's turn is it?
+        Player nextPlayer = isNextMovePlayerOne ? playerOne : playerTwo;
+
+        // what is their move?
+
+        // perform move
+
+        // did someone win?
+    }
+
+    public void play() {
+
+        while (!gameIsOver()) {
+            oneRound();
+        }
     }
 
     public static void main(String[] args) {
@@ -49,7 +77,10 @@ public class Game {
         Player player1 = new Human(humanSymbol);
         Player player2 = new Computer(humanSymbol.opposite());
         Game game = new Game(player1, player2);
-        game.printBoard();
+        game.play();
+
+//        game.printBoard();
+
 
     }
 }
