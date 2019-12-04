@@ -2,6 +2,8 @@ package TicTacToeGame.Players;
 
 import TicTacToeGame.BoardSymbol;
 
+import java.util.Random;
+
 public class Computer extends BasePlayer implements Player {
 
     public Computer(BoardSymbol oppositeSymbol) {
@@ -9,7 +11,8 @@ public class Computer extends BasePlayer implements Player {
     }
 
     @Override
-    public void nextMove() {
-
+    public int nextMove() {
+    Random rd = new Random();
+    return rd.nextInt(9)+1;
     }
 }

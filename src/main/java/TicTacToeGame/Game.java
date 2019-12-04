@@ -12,7 +12,7 @@ public class Game {
     Player playerOne;
     Player playerTwo;
 
-    boolean isNextMovePlayerOne=true;
+    boolean isNextMovePlayerOne = true;
 
 
     private BoardSymbol[][] board;
@@ -48,28 +48,61 @@ public class Game {
 
         if (existingSymbol == BoardSymbol.EMPTY) {
             this.board[row][column] = player.getSymbolChoice();
-
         } else {
-
+            throw new IllegalArgumentException("This field is not empty, try another field");
         }
     }
 
-    public void oneRound(){
+    public void oneRound() {
         // which player's turn is it?
         Player nextPlayer = isNextMovePlayerOne ? playerOne : playerTwo;
 
-        // what is their move?
-
-        // perform move
-
-        // did someone win?
+        while (true) {
+            // what is their move?
+            int userMove = nextPlayer.nextMove();
+            try {
+                // perform move
+                performPlayerMove(userMove, nextPlayer);
+            } catch (IllegalArgumentException e) {
+                e.getMessage();
+            }
+        }
     }
 
     public void play() {
+        printBoard();
 
+        // did someone win?
         while (!gameIsOver()) {
             oneRound();
         }
+    }
+
+    private boolean gameIsOver() {
+        BoardSymbol firstValue = BoardSymbol.EMPTY;
+
+        //horizontal win
+        for (int row = 0; row <3 ; row++) {
+            var row_ = board[0];
+            board[0][0] == row_[0];
+
+
+            BoardSymbol[] row_ = board[row];
+            firstValue = row_[0];
+
+
+            firstValue = board[row][0];
+
+            for (int column = 0; column <3 ; column++) {
+
+            }
+
+        }
+
+        //vertical win
+
+        //diagonal win
+
     }
 
     public static void main(String[] args) {

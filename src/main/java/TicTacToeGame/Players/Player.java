@@ -4,7 +4,7 @@ import TicTacToeGame.BoardSymbol;
 
 public interface Player {
 
-    public void nextMove();
+    public int nextMove();
     public BoardSymbol getSymbolChoice();
 
 }

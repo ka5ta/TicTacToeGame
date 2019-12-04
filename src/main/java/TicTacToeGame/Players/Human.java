@@ -12,11 +12,18 @@ public class Human extends BasePlayer implements Player {
     }
 
     @Override
-    public void nextMove() {
+    public int nextMove() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println();
-
+        while (true) {
+            System.out.println("Pick number from the board from 1-9");
+            int userPick = sc.nextInt();
+            if (userPick < 10 && userPick > 0) {
+                return userPick;
+            }else{
+                System.out.println("This is wrong, try again...idiota!");
+            }
+        }
     }
 
     public static BoardSymbol userChoiceSymbol() {
@@ -29,8 +36,8 @@ public class Human extends BasePlayer implements Player {
                 BoardSymbol userChoiceSymbol = BoardSymbol.symbolFromString(userChoice);
                 System.out.println("You are playing with "+userChoiceSymbol);
                 return userChoiceSymbol;
-            }catch(IllegalArgumentException e){
-                System.out.println("Wrong choice, try again..idiota!");
+            }catch(ExceptionWrongValue e){
+                System.out.println(e.getMessage());
             }
         }
     }
