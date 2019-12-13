@@ -1,9 +1,6 @@
 package TicTacToeGame;
 
-import TicTacToeGame.Players.BasePlayer;
-import TicTacToeGame.Players.Computer;
-import TicTacToeGame.Players.Human;
-import TicTacToeGame.Players.Player;
+import TicTacToeGame.Players.*;
 
 import java.util.Arrays;
 
@@ -71,39 +68,72 @@ public class Game {
 
     public void play() {
         printBoard();
+        BoardSymbol symbolChoice = playerOne.getSymbolChoice();
 
         // did someone win?
-        while (!gameIsOver()) {
+        while (gameIsOver() == GameStatus.CONTINUE) {
             oneRound();
         }
+
+        if (gameIsOver() == GameStatus.XWIN && symbolChoice == BoardSymbol.X) {
+            System.out.println("Player One wins");
+        } else if(gameIsOver() == GameStatus.OWIN && symbolChoice == BoardSymbol.O) {
+            System.out.println("Player One wins");
+        }else if(gameIsOver()==GameStatus.TIE){
+            System.out.println("Game is TIE, no one wins");
+        }else{
+            System.out.println("Player Two wins");
+        }
     }
 
-    private boolean gameIsOver() {
-        BoardSymbol firstValue = BoardSymbol.EMPTY;
 
-        //horizontal win
-        for (int row = 0; row <3 ; row++) {
-            var row_ = board[0];
-            board[0][0] == row_[0];
+    private GameStatus gameIsOver() {
+        BoardSymbol emptySpace = BoardSymbol.EMPTY;
+        GameStatus status = GameStatus.TIE;
 
-
-            BoardSymbol[] row_ = board[row];
-            firstValue = row_[0];
-
-
-            firstValue = board[row][0];
-
-            for (int column = 0; column <3 ; column++) {
-
+        //if still empty place on board
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == emptySpace) {
+                    status = GameStatus.CONTINUE;
+                }
             }
-
+        }
+        if (status != GameStatus.CONTINUE) {
+            return status;
         }
 
+        //horizontal win
+        for (int i = 0; i < 3; i++) {
+            BoardSymbol firstSymbol = board[i][0];
+            BoardSymbol secondSymbol = board[i][1];
+            BoardSymbol thirdSymbol = board[i][2];
+            if (firstSymbol == secondSymbol && firstSymbol == thirdSymbol) {
+                return firstSymbol.toStatus();
+            }
+        }
         //vertical win
-
+        for (int i = 0; i < 3; i++) {
+            BoardSymbol firstSymbol = board[0][i];
+            BoardSymbol secondSymbol = board[1][i];
+            BoardSymbol thirdSymbol = board[2][i];
+            if (firstSymbol == secondSymbol && firstSymbol == thirdSymbol) {
+                return firstSymbol.toStatus();
+            }
+        }
         //diagonal win
-
+        BoardSymbol topLeft = board[0][0];
+        BoardSymbol middleMiddle = board[1][1];
+        BoardSymbol bottomRight = board[2][2];
+        BoardSymbol bottomLeft = board[2][0];
+        BoardSymbol topRight = board[0][2];
+        if (topLeft == middleMiddle && topLeft == bottomRight) {
+            return middleMiddle.toStatus();
+        } else if (topRight == middleMiddle && topRight == bottomLeft) {
+            return middleMiddle.toStatus();
+        } else return GameStatus.CONTINUE;
     }
+
 
     public static void main(String[] args) {
         BoardSymbol humanSymbol = Human.userChoiceSymbol();
@@ -112,7 +142,6 @@ public class Game {
         Game game = new Game(player1, player2);
         game.play();
 
-//        game.printBoard();
 
 
     }

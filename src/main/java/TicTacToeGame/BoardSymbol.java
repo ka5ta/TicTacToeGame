@@ -1,5 +1,6 @@
 package TicTacToeGame;
 
+import TicTacToeGame.Players.GameStatus;
 import TicTacToeGame.Players.Human;
 
 import java.util.Optional;
@@ -30,6 +31,14 @@ public enum BoardSymbol {
          }else{
              return BoardSymbol.X;
          }
+    }
+
+    public GameStatus toStatus(){
+        if(this==BoardSymbol.X){
+            return GameStatus.XWIN;
+        }else{
+            return GameStatus.OWIN;
+        }
     }
 
     public static BoardSymbol symbolFromString(String userChoseSymbol) {
