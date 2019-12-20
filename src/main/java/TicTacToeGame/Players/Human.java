@@ -1,6 +1,7 @@
 package TicTacToeGame.Players;
 
 import TicTacToeGame.BoardSymbol;
+import TicTacToeGame.Game;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -13,7 +14,7 @@ public class Human extends BasePlayer implements Player {
     }
 
     @Override
-    public int nextMove() {
+    public int nextMove(Game game) {
 
         int userPick;
 

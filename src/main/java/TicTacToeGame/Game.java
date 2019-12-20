@@ -37,6 +37,12 @@ public class Game {
         }
     }
 
+    public BoardSymbol symbolFromExistingBoard(int number){
+        int column = (number - 1) % 3;
+        int row = (number - 1) / 3;
+        return board[row][column];
+    }
+
     public void performPlayerMove(int number, Player player) {
         int column = (number - 1) % 3;
         int row = (number - 1) / 3;
@@ -56,7 +62,7 @@ public class Game {
 
         while (true) {
             // what is their move?
-            int userMove = nextPlayer.nextMove();
+            int userMove = nextPlayer.nextMove(this);
             try {
                 // perform move
                 performPlayerMove(userMove, nextPlayer);
@@ -76,7 +82,7 @@ public class Game {
 
         // did someone win?
         do {
-            oneRound();
+            this.oneRound();
             gameStatus = gameIsOver();
         } while (gameStatus == GameStatus.CONTINUE);
 
