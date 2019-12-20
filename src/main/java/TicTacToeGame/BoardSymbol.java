@@ -1,5 +1,6 @@
 package TicTacToeGame;
 
+import TicTacToeGame.Players.ExceptionWrongValue;
 import TicTacToeGame.Players.GameStatus;
 import TicTacToeGame.Players.Human;
 
@@ -25,19 +26,23 @@ public enum BoardSymbol {
         return meaning;
     }
 
-    public BoardSymbol opposite(){
-         if(this == BoardSymbol.X){
-             return BoardSymbol.O;
-         }else{
-             return BoardSymbol.X;
-         }
+    public BoardSymbol opposite() {
+        if (this == BoardSymbol.X) {
+            return BoardSymbol.O;
+        } else {
+            return BoardSymbol.X;
+        }
     }
 
-    public GameStatus toStatus(){
-        if(this==BoardSymbol.X){
-            return GameStatus.XWIN;
-        }else{
-            return GameStatus.OWIN;
+    public GameStatus toStatus() {
+
+        switch (this) {
+            case X:
+                return GameStatus.XWIN;
+            case O:
+                return GameStatus.OWIN;
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
@@ -47,7 +52,8 @@ public enum BoardSymbol {
                 return BoardSymbol.X;
             case "O":
                 return BoardSymbol.O;
+            default:
+                throw new ExceptionWrongValue();
         }
-        throw new IllegalArgumentException();
     }
 }

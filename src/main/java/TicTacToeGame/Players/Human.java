@@ -2,6 +2,7 @@ package TicTacToeGame.Players;
 
 import TicTacToeGame.BoardSymbol;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Human extends BasePlayer implements Player {
@@ -13,11 +14,18 @@ public class Human extends BasePlayer implements Player {
 
     @Override
     public int nextMove() {
-        Scanner sc = new Scanner(System.in);
+
+        int userPick;
 
         while (true) {
             System.out.println("Pick number from the board from 1-9");
-            int userPick = sc.nextInt();
+            try {
+                Scanner sc = new Scanner(System.in);
+                userPick = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Why you entered text when I said number?");
+                continue;
+            }
             if (userPick < 10 && userPick > 0) {
                 return userPick;
             }else{

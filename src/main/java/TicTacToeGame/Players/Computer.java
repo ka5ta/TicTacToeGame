@@ -12,7 +12,9 @@ public class Computer extends BasePlayer implements Player {
 
     @Override
     public int nextMove() {
-    Random rd = new Random();
-    return rd.nextInt(9)+1;
+        Random rd = new Random();
+        int computerMove = rd.nextInt(9) + 1;
+        System.out.println("Your opponent made move: "+computerMove);
+        return computerMove;
     }
 }

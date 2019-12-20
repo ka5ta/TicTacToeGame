@@ -46,7 +46,7 @@ public class Game {
         if (existingSymbol == BoardSymbol.EMPTY) {
             this.board[row][column] = player.getSymbolChoice();
         } else {
-            throw new IllegalArgumentException("This field is not empty, try another field");
+            throw new ExceptionWrongValue();
         }
     }
 
@@ -60,26 +60,31 @@ public class Game {
             try {
                 // perform move
                 performPlayerMove(userMove, nextPlayer);
-            } catch (IllegalArgumentException e) {
-                e.getMessage();
+                break;
+            } catch (ExceptionWrongValue e) {
+                System.out.println(e.getMessage());
             }
         }
+        printBoard();
+        isNextMovePlayerOne = !isNextMovePlayerOne;
     }
 
     public void play() {
         printBoard();
         BoardSymbol symbolChoice = playerOne.getSymbolChoice();
+        GameStatus gameStatus;
 
         // did someone win?
-        while (gameIsOver() == GameStatus.CONTINUE) {
+        do {
             oneRound();
-        }
+            gameStatus = gameIsOver();
+        } while (gameStatus == GameStatus.CONTINUE);
 
-        if (gameIsOver() == GameStatus.XWIN && symbolChoice == BoardSymbol.X) {
+        if (gameStatus == GameStatus.XWIN && symbolChoice == BoardSymbol.X) {
             System.out.println("Player One wins");
-        } else if(gameIsOver() == GameStatus.OWIN && symbolChoice == BoardSymbol.O) {
+        } else if(gameStatus == GameStatus.OWIN && symbolChoice == BoardSymbol.O) {
             System.out.println("Player One wins");
-        }else if(gameIsOver()==GameStatus.TIE){
+        }else if(gameStatus==GameStatus.TIE){
             System.out.println("Game is TIE, no one wins");
         }else{
             System.out.println("Player Two wins");
@@ -88,50 +93,54 @@ public class Game {
 
 
     private GameStatus gameIsOver() {
-        BoardSymbol emptySpace = BoardSymbol.EMPTY;
-        GameStatus status = GameStatus.TIE;
-
-        //if still empty place on board
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] == emptySpace) {
-                    status = GameStatus.CONTINUE;
-                }
-            }
-        }
-        if (status != GameStatus.CONTINUE) {
-            return status;
-        }
 
         //horizontal win
         for (int i = 0; i < 3; i++) {
-            BoardSymbol firstSymbol = board[i][0];
-            BoardSymbol secondSymbol = board[i][1];
-            BoardSymbol thirdSymbol = board[i][2];
-            if (firstSymbol == secondSymbol && firstSymbol == thirdSymbol) {
-                return firstSymbol.toStatus();
+            BoardSymbol winnerSymbol=winnerSymbol(board[i][0],board[i][1],board[i][2]);
+            if (winnerSymbol!=null) {
+                return winnerSymbol.toStatus();
             }
         }
+
         //vertical win
         for (int i = 0; i < 3; i++) {
-            BoardSymbol firstSymbol = board[0][i];
-            BoardSymbol secondSymbol = board[1][i];
-            BoardSymbol thirdSymbol = board[2][i];
-            if (firstSymbol == secondSymbol && firstSymbol == thirdSymbol) {
-                return firstSymbol.toStatus();
+            BoardSymbol winnerSymbol = winnerSymbol(board[0][i],board[1][i],board[2][i]);
+            if (winnerSymbol!=null) {
+                return winnerSymbol.toStatus();
             }
         }
+
         //diagonal win
-        BoardSymbol topLeft = board[0][0];
-        BoardSymbol middleMiddle = board[1][1];
-        BoardSymbol bottomRight = board[2][2];
-        BoardSymbol bottomLeft = board[2][0];
-        BoardSymbol topRight = board[0][2];
-        if (topLeft == middleMiddle && topLeft == bottomRight) {
-            return middleMiddle.toStatus();
-        } else if (topRight == middleMiddle && topRight == bottomLeft) {
-            return middleMiddle.toStatus();
-        } else return GameStatus.CONTINUE;
+        BoardSymbol winnerSymbolTopLeft = winnerSymbol(board[0][0],board[1][1],board[2][2]);
+        BoardSymbol winnerSymbolTopRight = winnerSymbol(board[0][2], board[1][1], board[2][0]);
+        if (winnerSymbolTopLeft!=null) {
+            return winnerSymbolTopLeft.toStatus();
+        } else if (winnerSymbolTopRight!=null) {
+            return winnerSymbolTopRight.toStatus();
+        }
+
+        //if still empty place on board
+        boolean hasEmptySpace = false;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == BoardSymbol.EMPTY) {
+                    hasEmptySpace = true;
+                }
+            }
+        }
+        if (!hasEmptySpace) {
+            return GameStatus.TIE;
+        }
+
+        // still no one wins, game continues
+        return GameStatus.CONTINUE;
+    }
+
+    public BoardSymbol winnerSymbol(BoardSymbol first, BoardSymbol second, BoardSymbol third){
+        if(first == second && first == third && first!=BoardSymbol.EMPTY){
+            return first;
+        }
+        return null;
     }
 
 
@@ -141,8 +150,5 @@ public class Game {
         Player player2 = new Computer(humanSymbol.opposite());
         Game game = new Game(player1, player2);
         game.play();
-
-
-
     }
 }
