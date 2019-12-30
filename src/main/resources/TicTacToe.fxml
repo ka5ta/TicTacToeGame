@@ -6,15 +6,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="300.0" style="&#10;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane id="AnchorPane" fx:controller="TicTacToeGame.Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="300.0" style="&#10;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
     <MenuBar fx:id="menuBar" layoutX="0.0" layoutY="0.0" prefHeight="26.0" prefWidth="310">
       <menus>
         <Menu mnemonicParsing="false" text="New Game">
           <items>
-            <MenuItem mnemonicParsing="false" text="Player vs Computer" />
-            <MenuItem mnemonicParsing="false" text="Player vs Player" />
-            <MenuItem mnemonicParsing="false" text="Computer vs Computer" />
+            <MenuItem fx:id="pvc" onAction="#newGameStarting" mnemonicParsing="false" text="Player vs Computer" />
+            <MenuItem fx:id="pvp" onAction="#newGameStarting" mnemonicParsing="false" text="Player vs Player" />
+            <MenuItem fx:id="cvc" onAction="#newGameStarting" mnemonicParsing="false" text="Computer vs Computer" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Difficulty">
@@ -32,17 +32,17 @@
         <Menu mnemonicParsing="false" text="Exit" />
       </menus>
     </MenuBar>
-    <GridPane prefHeight="227.0" prefWidth="188.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="37.0">
+    <GridPane fx:id="gridPane" prefHeight="227.0" prefWidth="188.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="37.0">
       <children>
-        <Button fx:id="topLeft" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0"  text="Button" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <Button fx:id="topMiddle" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-        <Button fx:id="topRight" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-        <Button fx:id="leftMiddle" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="Button" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <Button fx:id="middleMiddle" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <Button fx:id="rightMiddle" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-        <Button fx:id="bottomLeft" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="Button" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <Button fx:id="bottomMiddle" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <Button fx:id="bottomRight" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+        <Button fx:id="topLeft" onAction="#handleClick" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0"  text="" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Button fx:id="topMiddle" onAction="#handleClick" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Button fx:id="topRight" onAction="#handleClick" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+        <Button fx:id="leftMiddle" onAction="#handleClick" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Button fx:id="middleMiddle" onAction="#handleClick" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Button fx:id="rightMiddle" onAction="#handleClick" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <Button fx:id="bottomLeft" onAction="#handleClick" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <Button fx:id="bottomMiddle" onAction="#handleClick" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Button fx:id="bottomRight" onAction="#handleClick" mnemonicParsing="false" prefHeight="77.0" prefWidth="107.0" text="" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

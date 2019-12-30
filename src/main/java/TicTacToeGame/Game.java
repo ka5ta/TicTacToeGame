@@ -14,17 +14,21 @@ public class Game {
 
     private BoardSymbol[][] board;
 
-    public Game() {
+/*    public Game() {
         this.board = new BoardSymbol[3][3];
         for (BoardSymbol[] row : board) {
             Arrays.fill(row, BoardSymbol.EMPTY);
         }
-    }
+    }*/
 
     public Game(Player player1, Player player2) {
-        this();
-        this.playerOne = player1;
-        this.playerTwo = player2;
+        this.board = new BoardSymbol[3][3];
+        for (BoardSymbol[] row : board) {
+            Arrays.fill(row, BoardSymbol.EMPTY);
+
+            this.playerOne = player1;
+            this.playerTwo = player2;
+        }
     }
 
     public void printBoard() {
@@ -48,9 +52,9 @@ public class Game {
         int row = (number - 1) / 3;
         BoardSymbol existingSymbol = board[row][column];
 
-
         if (existingSymbol == BoardSymbol.EMPTY) {
             this.board[row][column] = player.getSymbolChoice();
+            isNextMovePlayerOne = !isNextMovePlayerOne;
         } else {
             throw new ExceptionWrongValue();
         }
@@ -58,7 +62,7 @@ public class Game {
 
     public void oneRound() {
         // which player's turn is it?
-        Player nextPlayer = isNextMovePlayerOne ? playerOne : playerTwo;
+        Player nextPlayer = getCurrentPlayer();
 
         while (true) {
             // what is their move?
@@ -72,7 +76,10 @@ public class Game {
             }
         }
         printBoard();
-        isNextMovePlayerOne = !isNextMovePlayerOne;
+    }
+
+    public Player getCurrentPlayer() {
+        return isNextMovePlayerOne ? playerOne : playerTwo;
     }
 
     public void play() {
@@ -83,7 +90,7 @@ public class Game {
         // did someone win?
         do {
             this.oneRound();
-            gameStatus = gameIsOver();
+            gameStatus = getGameStatus();
         } while (gameStatus == GameStatus.CONTINUE);
 
         if (gameStatus == GameStatus.XWIN && symbolChoice == BoardSymbol.X) {
@@ -98,7 +105,7 @@ public class Game {
     }
 
 
-    private GameStatus gameIsOver() {
+    public GameStatus getGameStatus() {
 
         //horizontal win
         for (int i = 0; i < 3; i++) {

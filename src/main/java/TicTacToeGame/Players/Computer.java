@@ -7,8 +7,8 @@ import java.util.Random;
 
 public class Computer extends BasePlayer implements Player {
 
-    public Computer(BoardSymbol oppositeSymbol) {
-        super(oppositeSymbol);
+    public Computer(BoardSymbol symbol) {
+        super(symbol);
     }
 
     @Override
